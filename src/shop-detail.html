@@ -12,7 +12,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/app-route/app-route.html">
 <link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout.html">
 <link rel="import" href="shop-button.html">
-<link rel="import" href="shop-category-data.html">
+<link rel="import" href="uvalib-category-data.html">
 <link rel="import" href="shop-common-styles.html">
 <link rel="import" href="shop-image.html">
 <link rel="import" href="shop-select.html">
@@ -140,14 +140,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         data="{{routeData}}"></app-route>
 
     <!--
-      shop-category-data provides the item data for a given category and item name.
+      uvalib-category-data provides the item data for a given category and item name.
     -->
-    <shop-category-data
+    <uvalib-category-data
         id="categoryData"
         category-name="[[routeData.category]]"
         item-name="[[routeData.item]]"
         item="{{item}}"
-        failure="{{failure}}"></shop-category-data>
+        failure="{{failure}}"></uvalib-category-data>
 
     <div id="content" hidden$="[[failure]]">
       <shop-image alt="[[item.title]]" src="[[item.largeImage]]"></shop-image>
