@@ -20,9 +20,14 @@
     "iron-selector": "polymerelements/iron-selector#^1.0.0",
     "paper-icon-button": "polymerelements/paper-icon-button#^1.0.0",
     "paper-spinner": "polymerelements/paper-spinner#^1.0.0",
-    "uvalib-analytics": "uvalib-components/uvalib-analytics#master"
+    "uvalib-analytics": "uvalib-components/uvalib-analytics#master",
+    "uvalib-search-collection": "uvalib-components/uvalib-search-collection#master"
   },
   "devDependencies": {
     "web-component-tester": "^4.0.0"
+  },
+  "resolutions": {
+    "lodash": "^4.13.1",
+    "uvalib-search-collection": "master"
   }
 }
