@@ -82,6 +82,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         display: none;
       }
 
+      .login-btn-container {
+        position: relative;
+        width: 40px;
+      }
+
       .cart-btn-container {
         position: relative;
         width: 40px;
@@ -255,6 +260,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           </a>
         </div>
         <div class="logo" title><a href="/" aria-label="UVA Library Home">UVA Library</a></div>
+        <div class="login-btn-container">
+          <a href="/login" tabindex="-1">
+            <paper-icon-button icon="account-box" aria-label$="Application Login">Login</a></paper-icon-button>
+        </div>
         <div class="cart-btn-container">
           <a href="/cart" tabindex="-1">
             <paper-icon-button icon="shopping-cart" aria-label$="Shopping cart: [[_computePluralizedQuantity(numItems)]]"></paper-icon-button>
