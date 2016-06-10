@@ -11,7 +11,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="../bower_components/app-route/app-route.html">
 <link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout.html">
-<link rel="import" href="uvalib-category-data.html">
+<link rel="import" href="uvalib-mobile-category-data.html">
 <link rel="import" href="shop-common-styles.html">
 <link rel="import" href="shop-image.html">
 <link rel="import" href="shop-list-item.html">
@@ -85,13 +85,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         data="{{routeData}}"></app-route>
 
     <!--
-      uvalib-category-data provides the category data for a given category name.
+      uvalib-mobile-category-data provides the category data for a given category name.
     -->
-    <uvalib-category-data
+    <uvalib-mobile-category-data
         id="categoryData"
         category-name="[[routeData.category]]"
         category="{{category}}"
-        failure="{{failure}}"></uvalib-category-data>
+        failure="{{failure}}"></uvalib-mobile-category-data>
+
+    <!--
+      uvalib-search-collection provides the results list
+    -->
+    <uvalib-search-collection auto items="{{items}}"></uvalib-search-collection>
 
     <shop-image
         alt="[[category.title]]"
@@ -104,7 +109,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </header>
 
     <ul class="grid" hidden$="[[failure]]">
-      <template is="dom-repeat" items="[[_getListItems(category.items)]]" initial-count="4">
+      <!--<template is="dom-repeat" items="[[_getListItems(category.items)]]" initial-count="4">-->
+      <template is="dom-repeat" items="[[items]]" initial-count="4">
         <li>
           <a href$="[[_getItemHref(item)]]"><shop-list-item item="[[item]]"></shop-list-item></a>
         </li>
