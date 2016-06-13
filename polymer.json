@@ -2,6 +2,7 @@
   "entrypoint": "index.html",
   "shell": "src/shop-app.html",
   "fragments": [
+    "src/shop-login.html",
     "src/shop-list.html",
     "src/shop-detail.html",
     "src/shop-cart.html",

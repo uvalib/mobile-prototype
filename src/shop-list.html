@@ -90,12 +90,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <uvalib-mobile-category-data
         id="categoryData"
         category-name="[[routeData.category]]"
-        category="{{category}}"></uvalib-mobile-category-data>
+        category="{{category}}" facets="{{selectedFacets}}"></uvalib-mobile-category-data>
 
     <!--
       uvalib-search-collection provides the results list
     -->
-    <uvalib-search-collection last-error="{{failure}}" id="results" auto items="{{items}}"></uvalib-search-collection>
+    <uvalib-search-collection selected-filters="{{selectedFacets}}" last-error="{{failure}}" id="results" auto items="{{items}}"></uvalib-search-collection>
 
     <shop-image
         alt="[[category.title]]"
