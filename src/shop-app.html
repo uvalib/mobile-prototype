@@ -19,6 +19,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="../bower_components/iron-selector/iron-selector.html">
 <link rel="import" href="uvalib-mobile-category-data.html">
+<link rel="import" href="../bower_components/uvalib-auth/uvalib-auth.html">
 <!-- Since 'home' is the default route, eagerly load it. -->
 <link rel="import" href="shop-home.html">
 
@@ -315,9 +316,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <shop-checkout name="checkout" cart="[[cart]]" total="[[total]]" route="{{subroute}}"></shop-checkout>
     </iron-pages>
 
-    <footer>
-      <a href="https://www.polymer-project.org/1.0/toolbox/">Made by Polymer</a>
-    </footer>
+    <footer>© 2016 by the Rector and Visitors of the University of Virginia</footer>
 
     <!-- a11y announcer -->
     <div class="announcer" aria-live="assertive">[[_a11yLabel]]</div>
@@ -465,7 +464,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.categoryName = detail.category || '';
         // Announce the page's title
         if (detail.title) {
-          document.title = detail.title + ' - SHOP';
+          document.title = detail.title + ' - UVA Library';
           this._announce(detail.title + ', loaded');
         }
       },

@@ -1,5 +1,5 @@
 {
-  "name": "SHOP",
+  "name": "UVa Library",
   "version": "1.0",
   "authors": [
     "The Polymer Authors"
@@ -21,7 +21,8 @@
     "paper-icon-button": "polymerelements/paper-icon-button#^1.0.0",
     "paper-spinner": "polymerelements/paper-spinner#^1.0.0",
     "uvalib-analytics": "uvalib-components/uvalib-analytics#master",
-    "uvalib-search-collection": "uvalib-components/uvalib-search-collection#master"
+    "uvalib-search-collection": "uvalib-components/uvalib-search-collection#master",
+    "uvalib-auth": "uvalib-components/uvalib-auth#master"
   },
   "devDependencies": {
     "web-component-tester": "^4.0.0"

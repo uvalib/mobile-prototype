@@ -95,7 +95,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <!--
       uvalib-search-collection provides the results list
     -->
-    <uvalib-search-collection selected-filters="{{selectedFacets}}" last-error="{{failure}}" id="results" auto items="{{items}}"></uvalib-search-collection>
+    <uvalib-search-collection selected-filters$="{{selectedFacets}}" last-error="{{failure}}" id="results" items="{{items}}"></uvalib-search-collection>
 
     <shop-image
         alt="[[category.title]]"
@@ -177,6 +177,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       _categoryChanged: function(category, visible) {
         if (visible) {
+          this._fetchResults();
           this.debounce('change-section', function() {
             // Notify the category and the page's title
             this.fire('change-section', {
@@ -187,9 +188,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
       },
 
+      _fetchResults: function(){
+        this.debounce('fetch-results', function(){
+          if( this.$.results && this.$.results.generateRequest )
+            this.$.results.generateRequest();
+        }.bind(this));
+      },
+
       _tryReconnect: function() {
-//        this.$.categoryData.refresh();
-        this.$.results.generateRequest();
+//        this.$.results.generateRequest();
+        this._fetchResults();
       },
 
       _offlineChanged: function(offline) {

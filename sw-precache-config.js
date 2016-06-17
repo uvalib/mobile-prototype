@@ -27,6 +27,16 @@ module.exports = {
           name: 'data-cache'
         }
       }
+    },
+    {
+      urlPattern: /\/search\/.*/,
+      handler: 'fastest',
+      options: {
+        cache: {
+          maxEntries: 200,
+          name: 'search-cache'
+        }
+      }
     }
   ]
 };
