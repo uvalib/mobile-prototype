@@ -18,14 +18,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       {
         name: 'books',
         title: 'Books',
-        image: '/images/mens_outerwear.jpg',
+        image: '/images/books.png',
         placeholder: 'data:image/jpeg;base64,/9j/4QAYRXhpZgAASUkqAAgAAAAAAAAAAAAAAP/sABFEdWNreQABAAQAAAAeAAD/7gAOQWRvYmUAZMAAAAAB/9sAhAAQCwsLDAsQDAwQFw8NDxcbFBAQFBsfFxcXFxcfHhcaGhoaFx4eIyUnJSMeLy8zMy8vQEBAQEBAQEBAQEBAQEBAAREPDxETERUSEhUUERQRFBoUFhYUGiYaGhwaGiYwIx4eHh4jMCsuJycnLis1NTAwNTVAQD9AQEBAQEBAQEBAQED/wAARCAADAA4DASIAAhEBAxEB/8QAXAABAQEAAAAAAAAAAAAAAAAAAAIEAQEAAAAAAAAAAAAAAAAAAAACEAAAAwYHAQAAAAAAAAAAAAAAERMBAhIyYhQhkaEDIwUVNREBAAAAAAAAAAAAAAAAAAAAAP/aAAwDAQACEQMRAD8A3dkr5e8tfpwuneJITOzIcmQpit037Bw4mnCVNOpAAQv/2Q==',
         facets: {'format':'Book','library':{'inclusive':['Alderman','Astronomy','Biology & Psychology','Chemistry','Darden Business School','Ivy','Ivy Stacks','Mathematics','Physics','Special Collections','Law School','Fine Arts','Brown Sel','Clemons','Health Sciences','Music']}}
       },
       {
         name: 'videos',
         title: 'Videos',
-        image: '/images/ladies_outerwear.jpg',
+        image: '/images/videos.png',
         placeholder: 'data:image/jpeg;base64,/9j/4QAYRXhpZgAASUkqAAgAAAAAAAAAAAAAAP/sABFEdWNreQABAAQAAAAeAAD/7gAOQWRvYmUAZMAAAAAB/9sAhAAQCwsLDAsQDAwQFw8NDxcbFBAQFBsfFxcXFxcfHhcaGhoaFx4eIyUnJSMeLy8zMy8vQEBAQEBAQEBAQEBAQEBAAREPDxETERUSEhUUERQRFBoUFhYUGiYaGhwaGiYwIx4eHh4jMCsuJycnLis1NTAwNTVAQD9AQEBAQEBAQEBAQED/wAARCAADAA4DASIAAhEBAxEB/8QAWQABAQAAAAAAAAAAAAAAAAAAAAEBAQEAAAAAAAAAAAAAAAAAAAIDEAABAwMFAQAAAAAAAAAAAAARAAEygRIDIlITMwUVEQEBAAAAAAAAAAAAAAAAAAAAQf/aAAwDAQACEQMRAD8Avqn5meQ0kwk1UyclmLtNj7L4PQoioFf/2Q==',
         facets: {'format':'Video','library':{'inclusive':['Alderman','Astronomy','Biology & Psychology','Chemistry','Darden Business School','Ivy','Ivy Stacks','Mathematics','Physics','Special Collections','Law School','Fine Arts','Brown Sel','Clemons','Health Sciences','Music']}}
       },
@@ -67,7 +67,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         category: {
           type: Object,
           computed: '_computeCategory(categoryName)',
-          notify: true
+          notify: true,
+          readOnly: true
         },
 
         facets: {
@@ -106,7 +107,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         // will be notified when the fetch completes).
 
         var categoryObj = this._getCategoryObject(categoryName);
-        this.facets = categoryObj.facets;
+        if (categoryObj) this.facets = categoryObj.facets;
 //        this._fetchItems(categoryObj, 1);
         return categoryObj;
       },

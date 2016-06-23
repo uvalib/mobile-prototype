@@ -12,7 +12,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/app-route/app-route.html">
 <link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout.html">
 <link rel="import" href="shop-button.html">
-<link rel="import" href="uvalib-mobile-category-data.html">
+<!--<link rel="import" href="uvalib-mobile-category-data.html">-->
 <link rel="import" href="shop-common-styles.html">
 <link rel="import" href="shop-image.html">
 <link rel="import" href="shop-select.html">
@@ -136,18 +136,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     -->
     <app-route
         route="[[route]]"
-        pattern="/:category/:item"
+        pattern="/:item"
         data="{{routeData}}"></app-route>
 
     <!--
       uvalib-mobile-category-data provides the item data for a given category and item name.
     -->
+    <!--
     <uvalib-mobile-category-data
         id="categoryData"
         category-name="[[routeData.category]]"
         item-name="[[routeData.item]]"
         item="{{item}}"
-        failure="{{failure}}"></uvalib-mobile-category-data>
+        last-error="{{failure}}"></uvalib-mobile-category-data>
+    -->
+    <uvalib-search-collection id="item" item-id="{{routeData.item}}" item="{{item}}"></uvalib-search-collection>
 
     <div id="content" hidden$="[[failure]]">
       <shop-image alt="[[item.title]]" src="[[item.largeImage]]"></shop-image>
@@ -211,6 +214,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       properties: {
 
+        selectedItem: Object,
+
         item: Object,
 
         route: Object,
@@ -224,7 +229,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           observer: '_offlineChanged'
         },
 
-        failure: Boolean
+        failure: {
+          type: Boolean,
+          value: false
+        }
 
       },
 
@@ -275,9 +283,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         return item != null;
       },
 
-      _tryReconnect: function() {
-        this.$.categoryData.refresh();
+      _fetchResults: function(){
+        this.debounce('fetch-results', function(){
+          if( this.$.results && this.$.results.generateRequest )
+            this.$.results.generateRequest();
+        }.bind(this));
       },
+
+      _tryReconnect: function() {
+        this._fetchResults();
+      },
+
+//      _tryReconnect: function() {
+//        this.$.categoryData.refresh();
+//      },
 
       _offlineChanged: function(offline) {
         if (!offline) {

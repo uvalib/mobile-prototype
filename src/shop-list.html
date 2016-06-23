@@ -111,7 +111,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <!--<template is="dom-repeat" items="[[_getListItems(category.items)]]" initial-count="4">-->
       <template is="dom-repeat" items="[[items]]" initial-count="4">
         <li>
-          <a href$="[[_getItemHref(item)]]"><shop-list-item item="[[item]]"></shop-list-item></a>
+          <a href$="[[_getItemHref(item)]]" id="[[item.id]]" on-tap="_cacheItem"><shop-list-item item="[[item]]"></shop-list-item></a>
         </li>
       </template>
     </ul>
@@ -135,6 +135,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       properties: {
 
+        items: Array,
+
         category: Object,
 
         route: Object,
@@ -156,6 +158,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         '_categoryChanged(category, visible)'
       ],
 
+      _cacheItem: function(event) {
+        var id = event.currentTarget.id;
+        if (id) this.$.results.cacheItem(id);
+      },
+
       _getListItems: function(items) {
         // Return placeholder items when the items haven't loaded yet.
         return items || [{},{},{},{},{},{},{},{},{},{}];
@@ -164,7 +171,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       _getItemHref: function(item) {
         // By returning null when `itemId` is undefined, the href attribute won't be set and
         // the link will be disabled.
-        return item.id ? ['/detail', this.category.name, item.id].join('/') : null;
+        return item.id ? ['/detail', item.id].join('/') : null;
       },
 
       _getPluralizedQuantity: function(quantity) {
