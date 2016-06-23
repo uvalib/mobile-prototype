@@ -22,13 +22,15 @@
     "paper-spinner": "polymerelements/paper-spinner#^1.0.0",
     "uvalib-analytics": "uvalib-components/uvalib-analytics#master",
     "uvalib-search-collection": "uvalib-components/uvalib-search-collection#master",
-    "uvalib-auth": "uvalib-components/uvalib-auth#master"
+    "uvalib-auth": "uvalib-components/uvalib-auth#master",
+    "uvalib-helper-libs": "uvalib-components/uvalib-helper-libs#^1.1.0"
   },
   "devDependencies": {
     "web-component-tester": "^4.0.0"
   },
   "resolutions": {
     "lodash": "^4.13.1",
-    "uvalib-search-collection": "master"
+    "uvalib-search-collection": "master",
+    "uvalib-helper-libs": "master"
   }
 }
