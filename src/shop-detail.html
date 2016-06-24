@@ -12,7 +12,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/app-route/app-route.html">
 <link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout.html">
 <link rel="import" href="shop-button.html">
-<!--<link rel="import" href="uvalib-mobile-category-data.html">-->
 <link rel="import" href="shop-common-styles.html">
 <link rel="import" href="shop-image.html">
 <link rel="import" href="shop-select.html">
@@ -162,30 +161,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <shop-select>
             <label id="libraryLabel" prefix>Library</label>
             <juicy-select options="{{holdings}}" text-property="library" value-property="library">
-              <select id="librarySelect" aria-labelledby="libraryLabel"></select>
+              <select disabled?="{{!_isMultiple(holdings)}}" id="librarySelect" aria-labelledby="libraryLabel"></select>
             </juicy-select>
             <shop-md-decorator aria-hidden="true">
               <shop-underline></shop-underline>
             </shop-md-decorator>
           </shop-select>
-          <shop-select>
-            <label id="quantityLabel" prefix>Quantity</label>
-            <select id="quantitySelect" aria-labelledby="quantityLabel">
-              <option value="1" selected>1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
-            </select>
-            <shop-md-decorator aria-hidden="true">
-              <shop-underline></shop-underline>
-            </shop-md-decorator>
-          </shop-select>
         </div>
-        <div class="description">
-          <h2>Description</h2>
-          <p id="desc"></p>
-        </div>
+
+
+          <div class="description" has-content$="[[_isDefined(item.description)]]">
+            <h2>Description</h2>
+            <p id="desc">[[item.description]]</p>
+          </div>
+
+
         <shop-button responsive>
           <button on-tap="_addToCart" aria-label="Add this item to cart">Add to Cart</button>
         </shop-button>
@@ -210,6 +200,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       is: 'shop-detail',
 
       properties: {
+
+        lastCategory: String,
 
         selectedItem: Object,
 
@@ -244,17 +236,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       _itemChanged: function(item, visible) {
         if (visible) {
           this.debounce('item-change', function() {
-            // The item description contains escaped HTML (e.g. "&lt;br&gt;"), so we need to
-            // unescape it ("<br>") and set it as innerHTML.
-            var text = item ? item.description : '';
-            this.$.desc.innerHTML = this._unescapeText(text);
 
             // Reset the select menus.
-            this.$.quantitySelect.value = '1';
+//            this.$.quantitySelect.value = '1';
 //            this.$.sizeSelect.value = 'M';
 
             this.fire('change-section', {
-              category: item.category,
+              category: this.lastCategory, //item.category,
               title: item.title
             });
           });
@@ -271,7 +259,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         // This event will be handled by shop-app.
         this.fire('add-cart-item', {
           item: this.item,
-          quantity: parseInt(this.$.quantitySelect.value, 10),
+//          quantity: parseInt(this.$.quantitySelect.value, 10),
           library: this.$.librarySelect.value
         });
       },
