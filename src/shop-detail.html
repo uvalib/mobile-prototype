@@ -67,7 +67,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         margin: 0;
       }
 
-      .price {
+      .author {
         margin: 16px 0 40px;
         font-size: 16px;
         color: var(--app-secondary-color);
@@ -92,7 +92,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         border-top: 1px solid #ccc;
       }
 
-      shop-select > select {
+      shop-select select {
         font-size: 16px;
         padding: 16px 24px 16px 70px;
       }
@@ -122,7 +122,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           line-height: 24px;
         }
 
-        .price {
+        .author {
           font-size: inherit;
           margin: 12px 0 32px;
         }
@@ -151,15 +151,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         last-error="{{failure}}"></uvalib-mobile-category-data>
     -->
     <uvalib-search-collection id="item" item-id="{{routeData.item}}" item="{{item}}"></uvalib-search-collection>
+    <uvalib-catalog-availability id="availability" item-id="{{item.id}}" holdings="{{holdings}}" holdable="{{holdable}}"></uvalib-catalog-availability>
 
     <div id="content" hidden$="[[failure]]">
-      <shop-image alt="[[item.title]]" src="[[item.largeImage]]"></shop-image>
+      <shop-image alt="[[item.title]] cover art" src="[[item.image]]"></shop-image>
       <div class="detail" has-content$="[[_isDefined(item)]]">
         <h1>[[item.title]]</h1>
-        <div class="price">[[_formatPrice(item.price)]]</div>
+        <div class="author">[[item.author]]</div>
         <div class="pickers">
           <shop-select>
-            <label id="sizeLabel" prefix>Size</label>
+            <label id="libraryLabel" prefix>Library</label>
+            <juicy-select options="{{holdings}}" text-property="library" value-property="library">
+              <select id="librarySelect" aria-labelledby="libraryLabel"></select>
+            </juicy-select>
+<!--
             <select id="sizeSelect" aria-labelledby="sizeLabel">
               <option value="XS">XS</option>
               <option value="S">S</option>
@@ -167,6 +172,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               <option value="L">L</option>
               <option value="XL">XL</option>
             </select>
+-->
             <shop-md-decorator aria-hidden="true">
               <shop-underline></shop-underline>
             </shop-md-decorator>
@@ -240,6 +246,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         '_itemChanged(item, visible)'
       ],
 
+      _isMultiple: function(arry) {
+        return (Array.isArray(arry) && arry.length>1);
+      },
+
       _itemChanged: function(item, visible) {
         if (visible) {
           this.debounce('item-change', function() {
@@ -250,7 +260,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
             // Reset the select menus.
             this.$.quantitySelect.value = '1';
-            this.$.sizeSelect.value = 'M';
+//            this.$.sizeSelect.value = 'M';
 
             this.fire('change-section', {
               category: item.category,
@@ -266,16 +276,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         return elem.textContent;
       },
 
-      _formatPrice: function(price) {
-        return price ? '$' + price.toFixed(2) : '';
-      },
-
       _addToCart: function() {
         // This event will be handled by shop-app.
         this.fire('add-cart-item', {
           item: this.item,
           quantity: parseInt(this.$.quantitySelect.value, 10),
-          size: this.$.sizeSelect.value
+          library: this.$.librarySelect.value
         });
       },
 
