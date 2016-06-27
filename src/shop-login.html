@@ -18,12 +18,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   <template>
 
-    <style include="shop-common-styles"></style>
+    <style include="shop-common-styles shop-button"></style>
+
+    <uvalib-auth id="auth" auth="{{auth}}" signed-in="{{signedIn}}" user="{{user}}"></uvalib-auth>
 
     <!--
       shop-network-warning shows a warning message when the can't login due to being offline
     -->
     <shop-network-warning hide-button hidden$="[[!offline]]"></shop-network-warning>
+
+    <shop-button responsive>
+      <button on-tap="_netbadgeLogin" aria-label="Add this item to cart">Login with Netbadge</button>
+    </shop-button>
 
   </template>
 
@@ -34,10 +40,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       is: 'shop-login',
 
       properties: {
-
         offline: Boolean
-
       },
+
+      _netbadgeLogin: function(){
+        this.$.auth.signInWithNetbadge();
+      }
 
     });
 

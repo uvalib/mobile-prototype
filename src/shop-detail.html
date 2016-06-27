@@ -20,7 +20,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   <template>
 
-    <style include="shop-common-styles shop-button shop-select">
+    <style include="shop-common-styles shop-button">
 
       :host {
         display: block;
@@ -157,20 +157,35 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <div class="detail" has-content$="[[_isDefined(item)]]">
         <h1>[[item.title]]</h1>
         <div class="author">[[item.author]]</div>
+
+
+<!--
         <div class="pickers">
           <shop-select>
             <label id="libraryLabel" prefix>Library</label>
-            <juicy-select options="{{holdings}}" text-property="library" value-property="library">
-              <select disabled?="{{!_isMultiple(holdings)}}" id="librarySelect" aria-labelledby="libraryLabel"></select>
+            <juicy-select selected-property="Selected$" value="{{selectedHolding}}" options="{{holdings}}" text-property="libraryCode" value-property="libraryId">
+              <select id="librarySelect" aria-labelledby="libraryLabel"></select>
             </juicy-select>
             <shop-md-decorator aria-hidden="true">
               <shop-underline></shop-underline>
             </shop-md-decorator>
           </shop-select>
         </div>
+        <label id="callLabel" prefix>Callnumber</label>
+        <template is="dom-repeat" items="{{_getCopies(selectedHolding)}}">
+          <div class="callnumber">foo</div>
+        </template>
+-->
+          <template is="dom-repeat" items="[[holdings]]" as="holding">
+            <div class="holding" hidden$="[[!holding.copies]]">
+              <h2>{{holding.libraryCode}}</h2>
+              <template is="dom-repeat" items="[[holding.copies]]" as="copy">
+                <div class="where">[[holding.callNumber]] - [[copy.currentLocation.name]]</div>
+              </template>
+            </div>
+          </template>
 
-
-          <div class="description" has-content$="[[_isDefined(item.description)]]">
+          <div class="description" hidden$="[[!item.description]]">
             <h2>Description</h2>
             <p id="desc">[[item.description]]</p>
           </div>
@@ -179,6 +194,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <shop-button responsive>
           <button on-tap="_addToCart" aria-label="Add this item to cart">Add to Cart</button>
         </shop-button>
+
       </div>
     </div>
 
@@ -203,8 +219,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         lastCategory: String,
 
-        selectedItem: Object,
-
         item: Object,
 
         route: Object,
@@ -212,6 +226,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         routeData: Object,
 
         visible: Boolean,
+
+        holdings: Array,
 
         offline: {
           type: Boolean,
@@ -228,6 +244,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       observers: [
         '_itemChanged(item, visible)'
       ],
+
+      _getCopies: function(selectedHolding){
+        if (selectedHolding) {
+          var holding = _.find(this.holdings, ['libraryId',selectedHolding]);
+          if (holding.copies) return holding.copies;
+          else return [];
+        } else return [];
+      },
 
       _isMultiple: function(arry) {
         return (Array.isArray(arry) && arry.length>1);
