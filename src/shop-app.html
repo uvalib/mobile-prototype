@@ -219,7 +219,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     </style>
 
-    <uvalib-analytics site-id="13" path="[[route.path]]"></uvalib-analytics>
+    <uvalib-account-settings user-settings="{{settings}}"></uvalib-account-settings>
+
+    <template is="dom-if" if="[[settings.analytics]]" restamp>
+      <uvalib-analytics site-id="13" path="[[route.path]]"></uvalib-analytics>
+    </template>
 
     <uvalib-account-app></uvalib-account-app>
     <uvalib-account-auth id="auth" auth="{{auth}}" signed-in="{{signedIn}}" user="{{user}}"></uvalib-account-auth>
