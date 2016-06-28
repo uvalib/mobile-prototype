@@ -19,7 +19,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="../bower_components/iron-selector/iron-selector.html">
 <link rel="import" href="uvalib-mobile-category-data.html">
-<link rel="import" href="../bower_components/uvalib-auth/uvalib-auth.html">
+<link rel="import" href="../bower_components/uvalib-account/uvalib-account-app.html">
+<link rel="import" href="../bower_components/uvalib-account/uvalib-account-auth.html">
 <!-- Since 'home' is the default route, eagerly load it. -->
 <link rel="import" href="shop-home.html">
 
@@ -220,6 +221,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     <uvalib-analytics site-id="13" path="[[route.path]]"></uvalib-analytics>
 
+    <uvalib-account-app></uvalib-account-app>
+    <uvalib-account-auth id="auth" auth="{{auth}}" signed-in="{{signedIn}}" user="{{user}}"></uvalib-account-auth>
+
     <!--
       app-location and app-route elements provide the state of the URL for the app.
     -->
@@ -261,10 +265,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           </a>
         </div>
         <div class="logo" title><a href="/" aria-label="UVA Library Home">UVA Library</a></div>
-        <div class="login-btn-container">
-          <a href="/login" tabindex="-1">
-            <paper-icon-button icon="account-box" aria-label$="Application Login">Login</a></paper-icon-button>
-        </div>
+        <template is="dom-if" if="[[!signedIn]]">
+          <div class="login-btn-container">
+              <a href="/login" tabindex="-1">
+                <paper-icon-button icon="account-box" aria-label$="Application Login"></a></paper-icon-button>
+          </div>
+        </template>
+        <template is="dom-if" if="[[signedIn]]">
+          <div class="account-btn-container">
+            <a href="/account" tabindex="-1">
+              <paper-icon-button icon="account-circle" aria-label$="Patron Account &amp; Settings"></a></paper-icon-button>
+          </div>
+        </template>
         <div class="cart-btn-container">
           <a href="/cart" tabindex="-1">
             <paper-icon-button icon="shopping-cart" aria-label$="Shopping cart: [[_computePluralizedQuantity(numItems)]]"></paper-icon-button>
@@ -306,6 +318,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <shop-home name="home" categories="[[categories]]"></shop-home>
       <!-- login view -->
       <shop-login name="login" offline="[[offline]]"></shop-login>
+      <!-- account view -->
+      <shop-account name="account"></shop-account>
       <!-- list view of items in a category -->
       <shop-list name="list" route="[[subroute]]" offline="[[offline]]"></shop-list>
       <!-- detail view of one item -->

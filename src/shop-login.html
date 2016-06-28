@@ -12,24 +12,74 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout.html">
 <link rel="import" href="shop-button.html">
 <link rel="import" href="shop-common-styles.html">
-<link rel="import" href="../bower_components/uvalib-auth/uvalib-auth.html">
+<link rel="import" href="shop-form-styles.html">
+<link rel="import" href="shop-input.html">
+<link rel="import" href="../bower_components/uvalib-account/uvalib-account-auth.html">
 
 <dom-module id="shop-login">
 
   <template>
 
-    <style include="shop-common-styles shop-button"></style>
+    <style include="shop-common-styles shop-button shop-form-styles shop-input">
+      #auth-window {
+        @apply(--layout-horizontal);
+        @apply(--layout-center-justified);
+      }
+    </style>
 
-    <uvalib-auth id="auth" auth="{{auth}}" signed-in="{{signedIn}}" user="{{user}}"></uvalib-auth>
+    <uvalib-account-auth id="auth" auth="{{auth}}" signed-in="{{signedIn}}" user="{{user}}"></uvalib-account-auth>
 
     <!--
-      shop-network-warning shows a warning message when the can't login due to being offline
+      shop-network-warning shows a warning message when the patron can't login due to being offline
     -->
     <shop-network-warning hide-button hidden$="[[!offline]]"></shop-network-warning>
 
-    <shop-button responsive>
-      <button on-tap="_netbadgeLogin" aria-label="Add this item to cart">Login with Netbadge</button>
-    </shop-button>
+    <div id="auth-window" hidden$="[[offline]]">
+
+    <div id="logout" hidden$="[[!signedIn]]">
+      <shop-button responsive>
+        <button on-tap="_logout" aria-label="Logout of your account">Logout</button>
+      </shop-button>
+    </div>
+
+    <div id="login" hidden$="[[signedIn]]">
+      <shop-button responsive>
+        <button on-tap="_netbadgeLogin" aria-label="Login with netbadge">Login with Netbadge</button>
+      </shop-button>
+
+      <h2 id="otherLoginHeading">Or Login as a non-UVA user:</h2>
+      <form id="loginForm" is="iron-form" on-iron-form-presubmit="_otherLogin">
+
+        <div class="row input-row">
+          <shop-input>
+            <input type="text" id="uid" name="patronId" placeholder="Driver's License Number, eg: A12345678"
+                  required aria-labelledby="otherLoginHeading">
+            <shop-md-decorator error-message="Invalid Id" aria-hidden="true">
+              <label id="accountIdLabel">Id</label>
+              <shop-underline></shop-underline>
+            </shop-md-decorator>
+          </shop-input>
+        </div>
+
+        <div class="row input-row">
+          <shop-input>
+            <input type="password" id="pin" name="patronPin" placeholder="Last four digits of your ID, unless you've updated it"
+                  required aria-labelledby="otherLoginHeading">
+            <shop-md-decorator error-message="Invalid PIN" aria-hidden="true">
+              <label id="pinLabel">PIN</label>
+              <shop-underline></shop-underline>
+            </shop-md-decorator>
+          </shop-input>
+        </div>
+
+        <shop-button responsive id="submitBox">
+          <input type="button" on-click="_otherLogin" value="Login">
+        </shop-button>
+
+      </form>
+    </div>
+
+    </div>
 
   </template>
 
@@ -45,6 +95,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       _netbadgeLogin: function(){
         this.$.auth.signInWithNetbadge();
+      },
+
+      _otherLogin: function(event){
+        event.preventDefault();
+        this.$.auth.signInWithPin(this.$.uid, this.$.pin);
+      },
+
+      _logout: function(){
+        this.$.auth.signOut();
       }
 
     });
