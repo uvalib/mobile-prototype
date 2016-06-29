@@ -31,9 +31,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         --paper-toggle-button-unchecked-button-color:  red;
         --paper-toggle-button-unchecked-ink-color: red;
       }
+
+      .status {
+        font-weight: bolder;
+        margin-right: 5px;
+      }
+
+      .on {color: green;}
+      .off {color: red;}
+      
     </style>
 
     <div id="settings-window">
+      <span class="status on" hidden$="[[!settings.analytics]]">On</span>
+      <span class="status off" hidden$="[[settings.analytics]]">Off</span>
       <paper-toggle-button checked="{{settings.analytics}}">Web Analytics</paper-toggle-button>
     </div>
 
