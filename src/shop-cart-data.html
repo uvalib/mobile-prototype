@@ -37,12 +37,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           type: Number,
           computed: '_computeNumItems(cart.splices)',
           notify: true
-        },
-
-        total: {
-          type: Number,
-          computed: '_computeTotal(cart.splices)',
-          notify: true
         }
 
       },
@@ -81,16 +75,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         if (this.cart) {
           return this.cart.reduce(function(total, entry) {
             return total + entry.quantity;
-          }, 0);
-        }
-
-        return 0;
-      },
-
-      _computeTotal: function() {
-        if (this.cart) {
-          return this.cart.reduce(function(total, entry) {
-            return total + entry.quantity * entry.item.price;
           }, 0);
         }
 

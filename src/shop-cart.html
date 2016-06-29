@@ -23,24 +23,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         margin: 40px 0;
       }
 
-      .checkout-box {
-        font-weight: bold;
-        text-align: right;
-        margin-right: 10px;
-      }
-
-      .subtotal {
-        margin: 0 64px 0 24px;
-      }
-
-      @media (max-width: 767px) {
-
-        .subtotal {
-          margin: 0 0 0 24px;
-        }
-
-      }
-
     </style>
 
     <div class="main-frame">
@@ -57,12 +39,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <shop-cart-item entry="[[entry]]"></shop-cart-item>
           </template>
         </div>
-        <div class="checkout-box">
-          Total: <span class="subtotal">[[_formatTotal(total)]]</span>
-          <shop-button responsive>
-            <a href="/checkout">Checkout</a>
-          </shop-button>
-        </div>
       </div>
     </div>
 
@@ -76,8 +52,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       properties: {
 
-        total: Number,
-
         cart: Array,
 
         visible: {
@@ -90,10 +64,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           computed: '_computeHasItem(cart.length)'
         }
 
-      },
-
-      _formatTotal: function(total) {
-        return isNaN(total) ? '' : '$' + total.toFixed(2);
       },
 
       _computeHasItem: function(cartLength) {
