@@ -24,8 +24,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
     </style>
 
-    <uvalib-account-settings user-settings="{{settings}}"></uvalib-account-settings>
-
     <div id="settings-window">
       <paper-toggle-button checked="{{settings.analytics}}">Web Analytics</paper-toggle-button>
     </div>
@@ -39,6 +37,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       is: 'shop-account',
 
       properties: {
+        settings: Object
       }
 
     });

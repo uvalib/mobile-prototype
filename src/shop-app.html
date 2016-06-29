@@ -219,14 +219,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     </style>
 
+    <uvalib-account-app></uvalib-account-app>
+    <uvalib-account-auth id="auth" auth="{{auth}}" signed-in="{{signedIn}}" user="{{user}}"></uvalib-account-auth>
     <uvalib-account-settings user-settings="{{settings}}"></uvalib-account-settings>
-
     <template is="dom-if" if="[[settings.analytics]]" restamp>
       <uvalib-analytics site-id="13" path="[[route.path]]"></uvalib-analytics>
     </template>
-
-    <uvalib-account-app></uvalib-account-app>
-    <uvalib-account-auth id="auth" auth="{{auth}}" signed-in="{{signedIn}}" user="{{user}}"></uvalib-account-auth>
 
     <!--
       app-location and app-route elements provide the state of the URL for the app.
@@ -323,7 +321,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <!-- login view -->
       <shop-login name="login" offline="[[offline]]"></shop-login>
       <!-- account view -->
-      <shop-account name="account"></shop-account>
+      <shop-account name="account" settings="{{settings}}"></shop-account>
       <!-- list view of items in a category -->
       <shop-list name="list" route="[[subroute]]" offline="[[offline]]"></shop-list>
       <!-- detail view of one item -->
