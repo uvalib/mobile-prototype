@@ -39,13 +39,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       .on {color: green;}
       .off {color: red;}
-      
+
     </style>
 
+    <uvalib-account-settings web-analytics-permission="{{analytics}}"></uvalib-account-settings>
     <div id="settings-window">
-      <span class="status on" hidden$="[[!settings.analytics]]">On</span>
-      <span class="status off" hidden$="[[settings.analytics]]">Off</span>
-      <paper-toggle-button checked="{{settings.analytics}}">Web Analytics</paper-toggle-button>
+      <span class="status on" hidden$="[[!analytics]]">On</span>
+      <span class="status off" hidden$="[[analytics]]">Off</span>
+      <paper-toggle-button checked="{{analytics}}">Web Analytics</paper-toggle-button>
     </div>
 
   </template>
@@ -57,7 +58,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       is: 'shop-account',
 
       properties: {
-        settings: Object
       }
 
     });
