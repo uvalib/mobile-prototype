@@ -21,6 +21,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="uvalib-mobile-category-data.html">
 <link rel="import" href="../bower_components/uvalib-account/uvalib-account-app.html">
 <link rel="import" href="../bower_components/uvalib-account/uvalib-account-auth.html">
+<link rel="import" href="../bower_components/uvalib-account/uvalib-account-state.html">
+
 <!-- Since 'home' is the default route, eagerly load it. -->
 <link rel="import" href="shop-home.html">
 
@@ -219,22 +221,23 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     </style>
 
-    <uvalib-account-app></uvalib-account-app>
-    <uvalib-account-auth id="auth" auth="{{auth}}" signed-in="{{signedIn}}" user="{{user}}"></uvalib-account-auth>
-    <uvalib-account-settings user-settings="{{settings}}"></uvalib-account-settings>
-    <template is="dom-if" if="[[settings.analytics]]" restamp>
-      <uvalib-analytics site-id="13" path="[[route.path]]"></uvalib-analytics>
+    <uvalib-account-auth id="auth" auth="{{auth}}" signed-in="{{signedIn}}" user="{{user}}" user-meta="{{userInfo}}"></uvalib-account-auth>
+    <uvalib-account-settings web-analytics-permission="{{analytics}}"></uvalib-account-settings>
+    <template is="dom-if" if="[[analytics]]" restamp>
+      <uvalib-analytics site-id="13" path="[[_route.path]]"></uvalib-analytics>
     </template>
 
     <!--
       app-location and app-route elements provide the state of the URL for the app.
     -->
-    <app-location route="{{route}}"></app-location>
+    <app-location route="{{_route}}"></app-location>
     <app-route
-        route="{{route}}"
+        route="{{_route}}"
         pattern="/:page"
-        data="{{routeData}}"
-        tail="{{subroute}}"></app-route>
+        data="{{_routeData}}"
+        tail="{{_subroute}}"></app-route>
+
+    <uvalib-account-state route="{{_routeState}}"></uvalib-account-state>
 
     <iron-media-query query="max-width: 767px" query-matches="{{smallScreen}}"></iron-media-query>
 
@@ -319,11 +322,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <!-- login view -->
       <shop-login name="login" offline="[[offline]]"></shop-login>
       <!-- account view -->
-      <shop-account name="account" settings="{{settings}}"></shop-account>
+      <shop-account name="account"></shop-account>
       <!-- list view of items in a category -->
-      <shop-list name="list" route="[[subroute]]" offline="[[offline]]"></shop-list>
+      <shop-list name="list" route="[[_subroute]]" offline="[[offline]]"></shop-list>
       <!-- detail view of one item -->
-      <shop-detail last-category="[[categoryName]]" name="detail" route="[[subroute]]" offline="[[offline]]"></shop-detail>
+      <shop-detail last-category="[[categoryName]]" name="detail" route="[[_subroute]]" offline="[[offline]]"></shop-detail>
       <!-- cart view -->
       <shop-cart name="cart" cart="[[cart]]"></shop-cart>
     </iron-pages>
@@ -362,6 +365,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           value: 0
         },
 
+        _route: {
+          type: Object,
+          notify: true,
+          observer: '_routeChanged'
+        },
+        _routeState: {
+          type: Object,
+          notify: true,
+          observer: '_routeStateChanged'
+        },
+
         _shouldShowTabs: {
           computed: '_computeShouldShowTabs(page, smallScreen)'
         },
@@ -376,7 +390,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
 
       observers: [
-        '_routePageChanged(routeData.page)'
+        '_routePageChanged(_routeData.page)'
       ],
 
       listeners: {
@@ -386,6 +400,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         'change-section': '_onChangeSection',
         'announce': '_onAnnounce',
         'dom-change': '_domChange'
+      },
+
+      _routeChanged: function(){
+        if (this._route)
+          this.set('_routeState',this._route);
+      },
+      _routeStateChanged: function(){
+        if (this._routeState && this._routeState.path != this._route.path)
+          this.set('_route.path',this._routeState.path);
       },
 
       created: function() {
