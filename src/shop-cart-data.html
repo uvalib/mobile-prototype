@@ -73,9 +73,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       _computeNumItems: function() {
         if (this.cart) {
-          return this.cart.reduce(function(total, entry) {
-            return total + entry.quantity;
-          }, 0);
+          return this.cart.length;
         }
 
         return 0;
