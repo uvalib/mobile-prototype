@@ -21,6 +21,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="uvalib-mobile-category-data.html">
 <link rel="import" href="../bower_components/uvalib-account/uvalib-account-app.html">
 <link rel="import" href="../bower_components/uvalib-account/uvalib-account-auth.html">
+<link rel="import" href="../bower_components/uvalib-account/uvalib-account-settings.html">
 <link rel="import" href="../bower_components/uvalib-account/uvalib-account-state.html">
 
 <!-- Since 'home' is the default route, eagerly load it. -->
@@ -223,6 +224,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     <uvalib-account-auth id="auth" auth="{{auth}}" signed-in="{{signedIn}}" user="{{user}}" user-meta="{{userInfo}}"></uvalib-account-auth>
     <uvalib-account-settings web-analytics-permission="{{analytics}}"></uvalib-account-settings>
+
     <template is="dom-if" if="[[analytics]]" restamp>
       <uvalib-analytics site-id="13" path="[[_route.path]]"></uvalib-analytics>
     </template>
@@ -237,7 +239,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         data="{{_routeData}}"
         tail="{{_subroute}}"></app-route>
 
+<!--
     <uvalib-account-state route="{{_routeState}}"></uvalib-account-state>
+-->
 
     <iron-media-query query="max-width: 767px" query-matches="{{smallScreen}}"></iron-media-query>
 
@@ -402,14 +406,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         'dom-change': '_domChange'
       },
 
+
       _routeChanged: function(){
+/*
         if (this._route)
           this.set('_routeState',this._route);
       },
       _routeStateChanged: function(){
         if (this._routeState && this._routeState.path != this._route.path)
           this.set('_route.path',this._routeState.path);
+*/
       },
+
 
       created: function() {
         window.performance && performance.mark && performance.mark('shop-app.created');

@@ -17,7 +17,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   <template>
 
-    <style is="custom-style">
+    <style is="custom-style" include="shop-common-styles shop-checkbox">
       #settings-window {
         @apply(--layout-horizontal);
         @apply(--layout-center-justified);
@@ -43,11 +43,28 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </style>
 
     <uvalib-account-settings web-analytics-permission="{{analytics}}"></uvalib-account-settings>
+
+    <!--
     <div id="settings-window">
       <span class="status on" hidden$="[[!analytics]]">On</span>
       <span class="status off" hidden$="[[analytics]]">Off</span>
       <paper-toggle-button checked="{{analytics}}">Web Analytics</paper-toggle-button>
     </div>
+    -->
+
+    <paper-card heading="General Settings">
+    </paper-card>
+    <paper-card heading="Saved Information">
+      <shop-checkbox>
+        <input type="checkbox" id="setAnalytics" name="setAnalytics" checked$="[[analytics]]" on-change="_toggleAnalytics">
+        <shop-md-decorator></shop-md-decorator aria-hidden="true">
+      </shop-checkbox>
+      <label for="setAnalytics">Web Analytics</label>
+      <p>Allow anonymized app usage data to be stored for performance improvement purposes.</p>
+    </paper-card>
+    <paper-card heading="Virgo Notifications">
+    </paper-card>
+
 
   </template>
 
@@ -58,6 +75,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       is: 'shop-account',
 
       properties: {
+      },
+
+      _toggleAnalytics: function(e){
+        this.analytics = e.target.checked;
       }
 
     });
