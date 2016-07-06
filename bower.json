@@ -25,7 +25,6 @@
     "uvalib-account": "uvalib-components/uvalib-account#master",
     "uvalib-helper-libs": "uvalib-components/uvalib-helper-libs#^1.1.0",
     "paper-toggle-button": "PolymerElements/paper-toggle-button#^1.1.2",
-    "uvalib-image-viewer": "uvalib-components/uvalib-image-viewer#master",
     "iron-collapse": "PolymerElements/iron-collapse#^1.1.0",
     "paper-card": "PolymerElements/paper-card#^1.1.1",
     "paper-dialog": "PolymerElements/paper-dialog#^1.0.4"

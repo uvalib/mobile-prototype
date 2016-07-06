@@ -1,0 +1,92 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="shop-common-styles.html">
+<link rel="import" href="shop-checkbox.html">
+<link rel="import" href="shop-button.html">
+<link rel="import" href="../bower_components/paper-dialog/paper-dialog.html">
+
+<dom-module id="shop-account-toggle">
+
+  <template>
+
+    <style is="custom-style" include="shop-common-styles shop-checkbox shop-button">
+      label {
+        font-weight: bolder;
+      }
+      .perm {
+        margin: 20px;
+      }
+      shop-button {
+        margin: 10px;
+      }
+    </style>
+
+    <paper-dialog id="modal" modal on-iron-overlay-closed="_confirmClosed">
+      <p>{{confirm}}</p>
+      <div class="buttons">
+        <shop-button class="modal-button" dialog-dismiss><a href="/account">Cancel</a></shop-button>
+        <shop-button class="modal-button" dialog-confirm><a href="/account">Ok</a></shop-button>
+        <!--
+          <paper-button dialog-dismiss>Cancel</paper-button>
+          <paper-button dialog-confirm autofocus>OK</paper-button>
+        -->
+      </div>
+    </paper-dialog>
+
+    <div class="perm">
+        <shop-checkbox>
+          <input type="checkbox" id="setPerm" name="setAnalytics" checked$="[[value]]" on-change="_toggleValue">
+          <shop-md-decorator></shop-md-decorator aria-hidden="true">
+        </shop-checkbox>
+        <label for="setPerm">[[label]]</label>
+        <content></content>
+    </div>
+
+  </template>
+
+  <script>
+
+    Polymer({
+
+      is: 'shop-account-toggle',
+
+      properties: {
+        label: String,
+        value: {
+          type: Boolean,
+          notify: true
+        },
+        confirm: String
+      },
+
+      _toggleValue: function(e){
+        if (this.confirm && this.value && !e.target.checked){
+          this.$.modal.open();
+        } else {
+          this.value = e.target.checked;
+          this.fire('changed',this.value);
+        }
+      },
+
+      _confirmClosed: function(e){
+        if (this.$.modal.closingReason.confirmed == true)
+          this.value = this.$.setPerm.checked;
+        else
+          this.$.setPerm.checked = !this.$.setPerm.checked;
+      }
+
+    });
+
+  </script>
+
+</dom-module>
