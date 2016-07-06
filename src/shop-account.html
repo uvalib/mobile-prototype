@@ -11,61 +11,68 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout.html">
 <link rel="import" href="shop-common-styles.html">
+<link rel="import" href="shop-account-toggle.html">
 <link rel="import" href="../bower_components/uvalib-account/uvalib-account-settings.html">
 
 <dom-module id="shop-account">
 
   <template>
 
-    <style is="custom-style" include="shop-common-styles shop-checkbox">
-      #settings-window {
+    <style is="custom-style" include="shop-common-styles">
+      :host {
         @apply(--layout-horizontal);
         @apply(--layout-center-justified);
       }
 
-      paper-toggle-button {
-        --paper-toggle-button-checked-bar-color:  green;
-        --paper-toggle-button-checked-button-color:  green;
-        --paper-toggle-button-checked-ink-color: green;
-        --paper-toggle-button-unchecked-bar-color:  red;
-        --paper-toggle-button-unchecked-button-color:  red;
-        --paper-toggle-button-unchecked-ink-color: red;
+      #settings-window {
+        width: 90%
+        @apply(--layout-vertical);
       }
-
-      .status {
-        font-weight: bolder;
-        margin-right: 5px;
-      }
-
-      .on {color: green;}
-      .off {color: red;}
-
     </style>
 
-    <uvalib-account-settings web-analytics-permission="{{analytics}}"></uvalib-account-settings>
+    <uvalib-account-settings search-history-permission="{{searchHistoryPerm}}"
+                             saved-collection-permission="{{itemsListsPerm}}"
+                             web-analytics-permission="{{analyticsPerm}}"
+                             request-notify-permission="{{itemsArrivedNotify}}"
+                             coming-due-notify-permission="{{itemSoonDueNotify}}"
+                             over-due-notify-permission="{{itemOverDueNotify}}"
+                             recalled-items-notify-permission="{{recalledNotify}}"
+                             fines-notify-permission="{{finesAndFeesNotify}}"></uvalib-account-settings>
 
-    <!--
     <div id="settings-window">
-      <span class="status on" hidden$="[[!analytics]]">On</span>
-      <span class="status off" hidden$="[[analytics]]">Off</span>
-      <paper-toggle-button checked="{{analytics}}">Web Analytics</paper-toggle-button>
+      <paper-card heading="General Settings"></paper-card>
+      <paper-card heading="Saved Information">
+        <shop-account-toggle label="Search History" value="{{searchHistoryPerm}}"
+          confirm="Are you sure? Your search history will be lost.">
+          <p>Save your search history for custom search recommendations.</p>
+        </shop-account-toggle>
+        <shop-account-toggle label="Items and Lists" value="{{itemsListsPerm}}"
+          confirm="Are you sure? Your saved items and lists will be lost.">
+          <p>Save selected items to your account. Also save custom item lists.</p>
+        </shop-account-toggle>
+        <shop-account-toggle label="Web Analytics" value="{{analyticsPerm}}"
+          confirm="Are you sure? We use these anonymized analytics to make improvments to this app.">
+          <p>Allow anonymized app usage data to be stored for performance improvement purposes.</p>
+        </shop-account-toggle>
+      </paper-card>
+      <paper-card heading="Notifications">
+        <shop-account-toggle label="Your requested item(s) have arrived" value="{{itemsArrivedNotify}}">
+          <p>Be notified when requested item(s) have arrived at your preferred library.</p>
+        </shop-account-toggle>
+        <shop-account-toggle label="Your item(s) are about to be due" value="{{itemSoonDueNotify}}">
+          <p>Be notified 3 days prior to an item(s) due date.</p>
+        </shop-account-toggle>
+        <shop-account-toggle label="Your item(s) are overdue" value="{{itemOverDueNotify}}">
+          <p>Be notified when an item(s) is overdue and fines are accruing.</p>
+        </shop-account-toggle>
+        <shop-account-toggle label="Your item(s) have been recalled" value="{{recalledNotify}}">
+          <p>Be notified when another user has requested your item(s) and they are now due.</p>
+        </shop-account-toggle>
+        <shop-account-toggle label="Fines and fees" value="{{finesAndFeesNotify}}">
+          <p>Be notified when overdue charges or other fees have been applied to your account.</p>
+        </shop-account-toggle>
+      </paper-card>
     </div>
-    -->
-
-    <paper-card heading="General Settings">
-    </paper-card>
-    <paper-card heading="Saved Information">
-      <shop-checkbox>
-        <input type="checkbox" id="setAnalytics" name="setAnalytics" checked$="[[analytics]]" on-change="_toggleAnalytics">
-        <shop-md-decorator></shop-md-decorator aria-hidden="true">
-      </shop-checkbox>
-      <label for="setAnalytics">Web Analytics</label>
-      <p>Allow anonymized app usage data to be stored for performance improvement purposes.</p>
-    </paper-card>
-    <paper-card heading="Virgo Notifications">
-    </paper-card>
-
-
   </template>
 
   <script>
@@ -76,10 +83,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       properties: {
       },
-
-      _toggleAnalytics: function(e){
-        this.analytics = e.target.checked;
-      }
 
     });
 
