@@ -12,7 +12,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout.html">
 <link rel="import" href="shop-common-styles.html">
 <link rel="import" href="shop-account-toggle.html">
-<link rel="import" href="../bower_components/uvalib-account/uvalib-account-settings.html">
 
 <dom-module id="shop-account">
 
@@ -30,45 +29,36 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
     </style>
 
-    <uvalib-account-settings search-history-permission="{{searchHistoryPerm}}"
-                             saved-collection-permission="{{itemsListsPerm}}"
-                             web-analytics-permission="{{analyticsPerm}}"
-                             request-notify-permission="{{itemsArrivedNotify}}"
-                             coming-due-notify-permission="{{itemSoonDueNotify}}"
-                             over-due-notify-permission="{{itemOverDueNotify}}"
-                             recalled-items-notify-permission="{{recalledNotify}}"
-                             fines-notify-permission="{{finesAndFeesNotify}}"></uvalib-account-settings>
-
     <div id="settings-window">
       <paper-card heading="General Settings"></paper-card>
       <paper-card heading="Saved Information">
-        <shop-account-toggle label="Search History" value="{{searchHistoryPerm}}"
+        <shop-account-toggle label="Search History" value="{{settings.permissions.searchHistory}}"
           confirm="Are you sure? Your search history will be lost.">
           <p>Save your search history for custom search recommendations.</p>
         </shop-account-toggle>
-        <shop-account-toggle label="Items and Lists" value="{{itemsListsPerm}}"
+        <shop-account-toggle label="Items and Lists" value="{{settings.permissions.itemsLists}}"
           confirm="Are you sure? Your saved items and lists will be lost.">
           <p>Save selected items to your account. Also save custom item lists.</p>
         </shop-account-toggle>
-        <shop-account-toggle label="Web Analytics" value="{{analyticsPerm}}"
+        <shop-account-toggle label="Web Analytics" value="{{settings.permissions.webAnalytics}}"
           confirm="Are you sure? We use these anonymized analytics to make improvments to this app.">
           <p>Allow anonymized app usage data to be stored for performance improvement purposes.</p>
         </shop-account-toggle>
       </paper-card>
       <paper-card heading="Notifications">
-        <shop-account-toggle label="Your requested item(s) have arrived" value="{{itemsArrivedNotify}}">
+        <shop-account-toggle label="Your requested item(s) have arrived" value="{{settings.permissions.itemsArrivedNotify}}">
           <p>Be notified when requested item(s) have arrived at your preferred library.</p>
         </shop-account-toggle>
-        <shop-account-toggle label="Your item(s) are about to be due" value="{{itemSoonDueNotify}}">
+        <shop-account-toggle label="Your item(s) are about to be due" value="{{settings.permissions.comingDueNotify}}">
           <p>Be notified 3 days prior to an item(s) due date.</p>
         </shop-account-toggle>
-        <shop-account-toggle label="Your item(s) are overdue" value="{{itemOverDueNotify}}">
+        <shop-account-toggle label="Your item(s) are overdue" value="{{settings.permissions.overDueNotify}}">
           <p>Be notified when an item(s) is overdue and fines are accruing.</p>
         </shop-account-toggle>
-        <shop-account-toggle label="Your item(s) have been recalled" value="{{recalledNotify}}">
+        <shop-account-toggle label="Your item(s) have been recalled" value="{{settings.permissions.recalledNotify}}">
           <p>Be notified when another user has requested your item(s) and they are now due.</p>
         </shop-account-toggle>
-        <shop-account-toggle label="Fines and fees" value="{{finesAndFeesNotify}}">
+        <shop-account-toggle label="Fines and fees" value="{{settings.permissions.finesNotify}}">
           <p>Be notified when overdue charges or other fees have been applied to your account.</p>
         </shop-account-toggle>
       </paper-card>
@@ -82,6 +72,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       is: 'shop-account',
 
       properties: {
+        settings: {
+          type: Object,
+          notify: true
+        }
       },
 
     });

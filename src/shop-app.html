@@ -223,9 +223,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </style>
 
     <uvalib-account-auth id="auth" auth="{{auth}}" signed-in="{{signedIn}}" user="{{user}}" user-meta="{{userInfo}}"></uvalib-account-auth>
-    <uvalib-account-settings web-analytics-permission="{{analytics}}"></uvalib-account-settings>
+    <uvalib-account-settings user-settings="{{settings}}"></uvalib-account-settings>
 
-    <template is="dom-if" if="[[analytics]]" restamp>
+    <template is="dom-if" if="[[settings.permissions.webAnalytics]]" restamp>
       <uvalib-analytics site-id="13" path="[[_route.path]]"></uvalib-analytics>
     </template>
 
@@ -326,7 +326,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <!-- login view -->
       <shop-login name="login" offline="[[offline]]"></shop-login>
       <!-- account view -->
-      <shop-account name="account"></shop-account>
+      <shop-account name="account" settings="{{settings}}"></shop-account>
       <!-- list view of items in a category -->
       <shop-list name="list" route="[[_subroute]]" offline="[[offline]]"></shop-list>
       <!-- detail view of one item -->
