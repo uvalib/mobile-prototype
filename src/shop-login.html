@@ -99,7 +99,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       _otherLogin: function(event){
         event.preventDefault();
-        this.$.auth.signInWithPin(this.$.uid, this.$.pin);
+        this.$.auth.signInWithPin(this.$.uid.value, this.$.pin.value);
       },
 
       _logout: function(){
