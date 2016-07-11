@@ -223,7 +223,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </style>
 
     <uvalib-account-auth id="auth" auth="{{auth}}" signed-in="{{signedIn}}" user="{{user}}" user-meta="{{userInfo}}"></uvalib-account-auth>
-    <uvalib-account-settings user-settings="{{settings}}"></uvalib-account-settings>
+    <uvalib-account-settings auth="{{auth}}" user-settings="{{settings}}"></uvalib-account-settings>
 
     <template is="dom-if" if="[[settings.permissions.webAnalytics]]" restamp>
       <uvalib-analytics site-id="13" path="[[_route.path]]"></uvalib-analytics>
