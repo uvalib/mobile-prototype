@@ -272,16 +272,23 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           </a>
         </div>
         <div class="logo" title><a href="/" aria-label="UVA Library Home">UVA Library</a></div>
+        <div class="search-btn-container">
+          <a href="/search/food" tabindex="-1">
+            <paper-icon-button icon="search" aria-label$="Search the Library Catalog and Subscriptions"></paper-icon-button>
+          </a>
+        </div>
         <template is="dom-if" if="[[!signedIn]]">
           <div class="login-btn-container">
               <a href="/login" tabindex="-1">
-                <paper-icon-button icon="account-box" aria-label$="Application Login"></a></paper-icon-button>
+                <paper-icon-button icon="account-box" aria-label$="Application Login"></paper-icon-button>
+              </a>
           </div>
         </template>
         <template is="dom-if" if="[[signedIn]]">
           <div class="account-btn-container">
             <a href="/account" tabindex="-1">
-              <paper-icon-button icon="account-circle" aria-label$="Patron Account &amp; Settings"></a></paper-icon-button>
+              <paper-icon-button icon="account-circle" aria-label$="Patron Account &amp; Settings"></paper-icon-button>
+            </a>
           </div>
         </template>
         <div class="cart-btn-container">
@@ -329,6 +336,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <shop-account name="account" settings="{{settings}}"></shop-account>
       <!-- list view of items in a category -->
       <shop-list name="list" route="[[_subroute]]" offline="[[offline]]"></shop-list>
+      <!-- search view of items -->
+      <shop-search name="search" route="[[_subroute]]" offline="[[offline]]"></shop-search>
       <!-- detail view of one item -->
       <shop-detail last-category="[[categoryName]]" name="detail" route="[[_subroute]]" offline="[[offline]]"></shop-detail>
       <!-- cart view -->

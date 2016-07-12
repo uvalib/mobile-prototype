@@ -95,7 +95,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <!--
       uvalib-search-collection provides the results list
     -->
-    <uvalib-search-collection rows="100" selected-filters$="{{selectedFacets}}" last-error="{{failure}}" id="results" items="{{items}}"></uvalib-search-collection>
+    <uvalib-search-collection rows="100" count="{{count}}" selected-filters$="{{selectedFacets}}" last-error="{{failure}}" id="results" items="{{items}}"></uvalib-search-collection>
 
     <shop-image
         alt="[[category.title]]"
@@ -104,7 +104,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     <header>
       <h1>[[category.title]]</h1>
-      <span>[[_getPluralizedQuantity(category.items.length)]]</span>
+      <span>{{_getPluralizedQuantity(count)}}</span>
     </header>
 
     <ul class="grid" hidden$="[[failure]]">

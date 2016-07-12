@@ -5,6 +5,7 @@
     "src/shop-account.html",
     "src/shop-login.html",
     "src/shop-list.html",
+    "src/shop-search.html",
     "src/shop-detail.html",
     "src/shop-cart.html",
     "src/lazy-resources.html"
