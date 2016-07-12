@@ -11,12 +11,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="../bower_components/app-route/app-route.html">
 <link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout.html">
-<link rel="import" href="uvalib-mobile-category-data.html">
+<link rel="import" href="../bower_components/paper-spinner/paper-spinner-lite.html">
 <link rel="import" href="shop-common-styles.html">
 <link rel="import" href="shop-image.html">
 <link rel="import" href="shop-list-item.html">
 
-<dom-module id="shop-list">
+<dom-module id="shop-search">
 
   <template>
 
@@ -90,26 +90,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         data="{{routeData}}"></app-route>
 
     <!--
-      uvalib-mobile-category-data provides the category data for a given category name.
-    -->
-    <uvalib-mobile-category-data
-        id="categoryData"
-        category-name="[[routeData.category]]"
-        category="{{category}}" facets="{{selectedFacets}}"></uvalib-mobile-category-data>
-
-    <!--
       uvalib-search-collection provides the results list
     -->
-    <uvalib-search-collection loading="{{loading}}" rows="100" count="{{count}}" selected-filters$="{{selectedFacets}}" last-error="{{failure}}" id="results" items="{{items}}"></uvalib-search-collection>
-
-    <shop-image
-        alt="[[category.title]]"
-        src="[[category.image]]"
-        placeholder-img="[[category.placeholder]]" class="hero-image"></shop-image>
+    <uvalib-search-collection loading="{{loading}}" rows="100" count="{{count}}" query="[[routeData.category]]" last-error="{{failure}}" id="results" items="{{items}}"></uvalib-search-collection>
 
     <header>
-      <h1>[[category.title]]</h1>
-      <span>{{_getPluralizedQuantity(count)}}</span>
+      <h1>Search for <strong><em>[[routeData.category]]</em><strong></h1>
+      <span hidden$="[[loading]]">{{_getPluralizedQuantity(count)}}</span>
     </header>
 
     <div id="loading" hidden$="[[!loading]]">
@@ -140,7 +127,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     Polymer({
 
-      is: 'shop-list',
+      is: 'shop-search',
 
       properties: {
 

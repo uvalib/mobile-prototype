@@ -19,7 +19,7 @@
     "iron-pages": "polymerelements/iron-pages#^1.0.0",
     "iron-selector": "PolymerElements/iron-selector#^1.5.2",
     "paper-icon-button": "polymerelements/paper-icon-button#^1.0.0",
-    "paper-spinner": "polymerelements/paper-spinner#^1.0.0",
+    "paper-spinner": "PolymerElements/paper-spinner#^1.2.0",
     "uvalib-analytics": "uvalib-components/uvalib-analytics#master",
     "uvalib-search-collection": "uvalib-components/uvalib-search-collection#master",
     "uvalib-account": "uvalib-components/uvalib-account#master",
